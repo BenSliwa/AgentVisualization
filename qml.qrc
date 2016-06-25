@@ -2,5 +2,8 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>Settings.ini</file>
+        <file>Agent.qml</file>
+        <file>UI.js</file>
+        <file>MissionArea.qml</file>
     </qresource>
 </RCC>

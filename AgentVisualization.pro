@@ -5,7 +5,8 @@ CONFIG += c++11
 
 SOURCES += main.cpp \
     inisettings.cpp \
-    appcontroller.cpp
+    appcontroller.cpp \
+    filehandler.cpp
 
 RESOURCES += qml.qrc
 
@@ -17,5 +18,10 @@ include(deployment.pri)
 
 HEADERS += \
     inisettings.h \
-    appcontroller.h
+    appcontroller.h \
+    filehandler.h
 
+
+include(Agent/Agent.pri)
+include(ChannelModel/ChannelModel.pri)
+include(Mobility/Mobility.pri)

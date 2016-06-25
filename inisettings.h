@@ -16,7 +16,7 @@ public:
 
 
     QMap<QString, QVariant> loadGroup(const QString &_group);
-    QVariant getValue(const QString &_group, const QString &_key);
+    Q_INVOKABLE QVariant getValue(const QString &_group, const QString &_key);
 
 private:
     QString m_path;
