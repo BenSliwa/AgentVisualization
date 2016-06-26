@@ -1,5 +1,7 @@
 import QtQuick 2.0
 
+
+
 Rectangle {
     property string m_id: ""
 
@@ -8,6 +10,22 @@ Rectangle {
     color: "blue"
 
     radius: width*0.5
+
+    MouseArea{
+        anchors.fill: parent
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onClicked:
+        {
+            if(mouse.button & Qt.LeftButton) {
+                console.log("L" + m_id);
+            }
+            else if(mouse.button & Qt.RightButton) {
+                console.log("R" + m_id)
+            }
+
+        }
+
+    }
 
     Text {
         anchors.centerIn: parent

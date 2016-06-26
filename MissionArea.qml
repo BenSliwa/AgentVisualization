@@ -38,8 +38,6 @@ Rectangle {
         inY = Settings.getValue("Playground", "y");
         inZ = Settings.getValue("Playground", "z");
 
-
-
         AppController.agentAdded.connect(onAgentAdded);
         AppController.clearLinks.connect(onClearLinks);
         AppController.addLink.connect(onAddLink);
@@ -60,55 +58,45 @@ Rectangle {
 
     function draw()
     {
-
         var ctx = canvas.getContext("2d");
-
         CanvasLib.clear(ctx, width, height);
-
         for(var i=0; i<links.length; i++)
         {
             var link = links[i];
+            var pos1 = mapToMissionArea(link[0], link[1], 0);
+            var pos2 = mapToMissionArea(link[3], link[4], 0);
 
-
-            var x1 = map(link[0], 0.0, inX, 0.0, w);
-            var y1 = map(link[1], 0.0, inY, h, 0.0);
-            var x2 = map(link[3], 0.0, inX, 0.0, w);
-            var y2 = map(link[4], 0.0, inY, h, 0.0);
-
-            CanvasLib.drawLine(ctx, x1, y1, x2, y2);
+            CanvasLib.drawLine(ctx, pos1.x, pos1.y, pos2.x, pos2.y);
         }
-
-
-
-
-
-
-
-
-
     }
 
     function onAgentAdded(_id, _x, _y, _z)
     {
         var agent = UI.createObject("Agent.qml", rect);
-
-        var x = map(_x, 0.0, inX, 0.0, w);
-        var y = map(_y, 0.0, inY, h, 0.0);
+        var pos = mapToMissionArea(_x, _y, _z);
 
         agent.setId(_id);
-        agent.setPosition(x, y);
+        agent.setPosition(pos.x, pos.y);
     }
 
     function onAgentPositionUpdated(_id, _x, _y, _z)
     {
-        var x = map(_x, 0.0, inX, 0.0, w);
-        var y = map(_y, 0.0, inY, h, 0.0);
+        var x = map(_x, 250, inX, 0.0, w);
+        var y = map(_y, 250, inY, h, 0.0);
 
         agentPositionUpdated(_id, x, y, 0);
     }
 
 
+    function mapToMissionArea(_x, _y, _z)
+    {
+        var pos = [];
+        pos.x = map(_x, 250, inX, 0.0, w);
+        pos.y = map(_y, 250, inY, h, 0.0);
+        //pos.z = map(_z, 250, inZ, h, 0.0);
 
+        return pos;
+    }
 
     function map(_value, _inMin, _inMax, _outMin, _outMax)
     {
