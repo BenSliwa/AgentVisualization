@@ -16,6 +16,7 @@ public:
 
     ChannelModel* getChannelModel();
 
+
 signals:
 
 

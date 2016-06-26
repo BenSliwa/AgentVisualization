@@ -17,10 +17,10 @@ Rectangle {
         onClicked:
         {
             if(mouse.button & Qt.LeftButton) {
-                console.log("L" + m_id);
+                AppController.handleAgentLeftClick(m_id);
             }
             else if(mouse.button & Qt.RightButton) {
-                console.log("R" + m_id)
+                AppController.handleAgentRightClick(m_id);
             }
 
         }

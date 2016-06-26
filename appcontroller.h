@@ -19,6 +19,9 @@ public:
 
     Q_INVOKABLE void setSimTime(double _simTime_ms);
 
+    Q_INVOKABLE void handleAgentLeftClick(const QString &_id);
+    Q_INVOKABLE void handleAgentRightClick(const QString &_id);
+
 private slots:
     void onAgentPositionUpdated();
 
@@ -27,7 +30,7 @@ signals:
     void agentPositionUpdated(const QString &_id, double _x, double _y, double _z);
 
     void clearLinks();
-    void addLink(double _x1, double _y1, double _z1, double _x2, double _y2, double _z2);
+    void addLink(double _x1, double _y1, double _z1, double _x2, double _y2, double _z2, const QString &_type);
     void updateLinks();
 
 private:
@@ -36,7 +39,15 @@ private:
     IniSettings m_settings;
 
     QList<CSVMobilityDataAccess*> m_csv;
-    QList<Agent*> m_agents;
+    QMap<QString, Agent*> m_agents;
+
+
+    Agent* m_sender;
+    Agent* m_destination;
+
+
+    double m_simTime_ms;
+
 };
 
 #endif // APPCONTROLLER_H

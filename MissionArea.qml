@@ -14,6 +14,7 @@ Rectangle {
     property int a: 0
 
     property variant links: []
+    property variant connections: []
 
     signal agentPositionUpdated(string _id, double _x, double _y, double _z)
 
@@ -66,7 +67,16 @@ Rectangle {
             var pos1 = mapToMissionArea(link[0], link[1], 0);
             var pos2 = mapToMissionArea(link[3], link[4], 0);
 
-            CanvasLib.drawLine(ctx, pos1.x, pos1.y, pos2.x, pos2.y);
+            CanvasLib.drawLine(ctx, pos1.x, pos1.y, pos2.x, pos2.y, "black");
+        }
+
+        for(var i=0; i<connections.length; i++)
+        {
+            var connection = connections[i];
+            var from = mapToMissionArea(connection[0], connection[1], 0);
+            var to = mapToMissionArea(connection[3], connection[4], 0);
+
+            CanvasLib.drawLine(ctx, from.x, from.y, to.x, to.y, "lightgreen");
         }
     }
 
@@ -106,12 +116,17 @@ Rectangle {
     function onClearLinks()
     {
         links = [];
+        connections = [];
     }
 
-    function onAddLink(_x1, _y1, _z1, _x2, _y2, _z2)
+    function onAddLink(_x1, _y1, _z1, _x2, _y2, _z2, _type)
     {
         var link = [_x1, _y1, _z1, _x2, _y2, _z2];
-        links.push(link);
+
+        if(_type=="L")
+            links.push(link);
+        else if(_type=="C")
+            connections.push(link);
     }
 
     function onUpdateLinks()
