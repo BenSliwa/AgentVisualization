@@ -4,7 +4,7 @@ Rectangle {
     property string m_id: ""
 
     //x: parent.width/+2-width/2; y: parent.height/2-height/2
-    width: 50; height: width
+    width: 30; height: width
     color: "blue"
 
     radius: width*0.5
@@ -17,7 +17,8 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        AppController.agentPositionUpdated.connect(onAgentPositionUpdated);
+        //AppController.agentPositionUpdated.connect(onAgentPositionUpdated);
+        parent.agentPositionUpdated.connect(onAgentPositionUpdated);
     }
 
     function setId(_id)
@@ -36,5 +37,8 @@ Rectangle {
     {
         x = _x - width/2;
         y = _y - height/2;
+
+        // TODO: hier fehlt das mapping
+
     }
 }

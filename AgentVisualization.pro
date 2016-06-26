@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick
+QT += qml quick network
 CONFIG += c++11
 
 SOURCES += main.cpp \
@@ -25,3 +25,4 @@ HEADERS += \
 include(Agent/Agent.pri)
 include(ChannelModel/ChannelModel.pri)
 include(Mobility/Mobility.pri)
+include(Net/Net.pri)

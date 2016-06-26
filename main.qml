@@ -25,7 +25,9 @@ Window {
         return agent;
     }
 
-    MissionArea{}
+    MissionArea{
+        id: missionArea
+    }
 
     Slider {
         width: parent.width
@@ -34,6 +36,8 @@ Window {
         onValueChanged: {
             var currentValue = parseInt(value);
             AppController.setSimTime(currentValue*1000);
+
+            missionArea.test(currentValue);
         }
     }
 }

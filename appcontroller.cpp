@@ -1,6 +1,6 @@
 #include "appcontroller.h"
 #include <QQmlContext>
-
+#include "math.h"
 
 AppController *appControllerInstance = 0;
 
@@ -9,7 +9,7 @@ AppController::AppController(QObject *_parent) : QObject(_parent)
     m_settings.init(":/Settings.ini");
 
 
-
+    ChannelModelService *channelModelService = ChannelModelService::getInstance();
 
 
     //
@@ -38,6 +38,7 @@ AppController::AppController(QObject *_parent) : QObject(_parent)
         emit agentAdded(agentId, position->x, position->y, position->z);
 
         m_csv << csv;
+        m_agents << agent;
     }
 
 
@@ -55,6 +56,35 @@ void AppController::setSimTime(double _simTime_ms)
 {
     for(int i=0; i<m_csv.size(); i++)
         m_csv.at(i)->update(_simTime_ms);
+
+
+    ChannelModel *channelModel = ChannelModelService::getInstance()->getChannelModel();
+    emit clearLinks();
+
+    double maxDistance_m = 200;
+    for(int i=0; i<m_agents.size(); i++)
+    {
+        Agent *from = m_agents.at(i);
+        for(int j=0; j<m_agents.size(); j++)
+        {
+            if(i!=j)
+            {
+                Agent *to = m_agents.at(j);
+
+                Position p1 = *from->getPosition();
+                Position p2 = *to->getPosition();
+
+                double distance_m = sqrt(pow(p2.x-p1.x,2) + pow(p2.y-p1.y,2) + pow(p2.z-p1.z,2));
+                if(distance_m<maxDistance_m)
+                    emit addLink(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z);
+
+
+            }
+        }
+    }
+
+    emit updateLinks();
+
 }
 
 void AppController::onAgentPositionUpdated()
