@@ -5,6 +5,7 @@ import QtQuick.Controls 1.4
 Window {
     visible: true
 
+
     Component.onCompleted: {
         height = Settings.getValue("UI", "height");
         width = Settings.getValue("UI", "width");
@@ -27,14 +28,42 @@ Window {
 
     MissionArea{
         id: missionArea
+
+        focus: true
+        Keys.onPressed: {
+            if(event.key==Qt.Key_H)
+            {
+                if(settingsPage.visible==true)
+                    settingsPage.visible = false;
+                else
+                    settingsPage.visible = true;
+            }
+        }
+
+
+    }
+
+    SettingsPage
+    {
+        id: settingsPage
+        anchors.bottom: parent.bottom
+    }
+
+    Text {
+        id: simTimeLabel
+        text: "Time[s]: "
+        color: "white"
+        width: parent.width/8
     }
 
     Slider {
-        width: parent.width
+        width: parent.width/8*6
         id: slider
+        anchors.left: simTimeLabel.right
 
         onValueChanged: {
             var currentValue = parseInt(value);
+            simTimeLabel.text = "Time[s]: " + currentValue;
             AppController.setSimTime(currentValue*1000);
 
             missionArea.test(currentValue);

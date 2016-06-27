@@ -8,7 +8,8 @@ AppController *appControllerInstance = 0;
 AppController::AppController(QObject *_parent) : QObject(_parent),
     m_sender(0),
     m_destination(0),
-    m_simTime_ms(0)
+    m_simTime_ms(0),
+    m_dMax_m(0)
 {
     m_settings.init(":/Settings.ini");
 
@@ -23,6 +24,8 @@ AppController::AppController(QObject *_parent) : QObject(_parent),
 
     m_qml.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
+
+    m_dMax_m = channelModelService->getChannelModel()->calculateDistance(-83);
 
 
     QString csvPath = m_settings.getValue("Simulation", "csvPath").toString();
@@ -66,10 +69,7 @@ void AppController::setSimTime(double _simTime_ms)
         m_csv.at(i)->update(_simTime_ms);
 
 
-    ChannelModel *channelModel = ChannelModelService::getInstance()->getChannelModel();
     emit clearLinks();
-
-    double maxDistance_m = 200;
     QStringList agentIds = m_agents.keys();
     QMap<Agent*, QList<Agent*>> links;
     for(int i=0; i<agentIds.size(); i++)
@@ -87,7 +87,7 @@ void AppController::setSimTime(double _simTime_ms)
                 Position p2 = *to->getPosition();
 
                 double distance_m = sqrt(pow(p2.x-p1.x,2) + pow(p2.y-p1.y,2) + pow(p2.z-p1.z,2));
-                if(distance_m<maxDistance_m)
+                if(distance_m<m_dMax_m)
                 {
                     neighbors << to;
                     emit addLink(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z, "L");
@@ -136,6 +136,16 @@ void AppController::handleAgentRightClick(const QString &_id)
     setSimTime(m_simTime_ms);
 }
 
+void AppController::handleGammaChange(double _gamma)
+{
+    ChannelModelService *channelModelService = ChannelModelService::getInstance();
+    ChannelModel *channelModel = channelModelService->getChannelModel();
+
+    channelModel->setGamma(_gamma);
+    m_dMax_m = channelModelService->getChannelModel()->calculateDistance(-83);
+
+    setSimTime(m_simTime_ms);
+}
 
 void AppController::onAgentPositionUpdated()
 {

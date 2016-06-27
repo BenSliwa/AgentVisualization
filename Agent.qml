@@ -39,6 +39,14 @@ Rectangle {
         parent.agentPositionUpdated.connect(onAgentPositionUpdated);
     }
 
+    function toggleVisibility()
+    {
+        if(visible)
+            visible = false;
+        else
+            visible = true;
+    }
+
     function setId(_id)
     {
         m_id = _id;

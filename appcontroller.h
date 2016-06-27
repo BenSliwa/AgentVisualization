@@ -22,6 +22,8 @@ public:
     Q_INVOKABLE void handleAgentLeftClick(const QString &_id);
     Q_INVOKABLE void handleAgentRightClick(const QString &_id);
 
+    Q_INVOKABLE void handleGammaChange(double _gamma);
+
 private slots:
     void onAgentPositionUpdated();
 
@@ -47,6 +49,7 @@ private:
 
 
     double m_simTime_ms;
+    double m_dMax_m;
 
 };
 

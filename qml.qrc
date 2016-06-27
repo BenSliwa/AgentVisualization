@@ -6,5 +6,6 @@
         <file>UI.js</file>
         <file>MissionArea.qml</file>
         <file>Canvas.js</file>
+        <file>SettingsPage.qml</file>
     </qresource>
 </RCC>

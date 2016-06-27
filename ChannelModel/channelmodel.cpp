@@ -16,3 +16,8 @@ double ChannelModel::mW2dBm(double _mw)
 {
     return 10 * log10(_mw);
 }
+
+void ChannelModel::setGamma(double _gamma)
+{
+    m_gamma = _gamma;
+}

@@ -10,6 +10,7 @@ public:
     Friis(QObject *_parent = 0);
 
     double calculateReceivedSignalStrength(double _distance_m);
+    double calculateDistance(double _pRMin_dBm);
 };
 
 #endif // FRIIS_H
