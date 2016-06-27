@@ -4,13 +4,15 @@
 #include <QObject>
 #include <QDebug>
 
+#include "Mobility/position.h"
+
 class ChannelModel : public QObject
 {
     Q_OBJECT
 public:
     ChannelModel(QObject *_parent = 0);
 
-    virtual double calculateReceivedSignalStrength(double _distance_m) = 0;
+    virtual double calculateReceivedSignalStrength(const Position &_sender, const Position &_receiver) = 0;
     virtual double calculateDistance(double _PrMin_dBm) = 0;
 
     void setGamma(double _gamma);

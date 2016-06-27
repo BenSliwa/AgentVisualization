@@ -9,9 +9,11 @@ Friis::Friis(QObject *_parent) : ChannelModel(_parent)
     m_Gr = 1;
 }
 
-double Friis::calculateReceivedSignalStrength(double _distance_m)
+double Friis::calculateReceivedSignalStrength(const Position &_sender, const Position &_receiver)
 {
-    double pR_mW = m_Ps_mW * m_Gs * m_Gr * pow(m_c/(4*m_pi*m_f_GHz), 2) * 1/pow(_distance_m, m_gamma);
+    double distance_m = sqrt(pow(_receiver.x-_sender.x,2) + pow(_receiver.y-_sender.y,2) + pow(_receiver.z-_sender.z,2));
+
+    double pR_mW = m_Ps_mW * m_Gs * m_Gr * pow(m_c/(4*m_pi*m_f_GHz), 2) * 1/pow(distance_m, m_gamma);
     return mW2dBm(pR_mW);
 }
 

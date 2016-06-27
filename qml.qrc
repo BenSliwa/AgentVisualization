@@ -7,5 +7,6 @@
         <file>MissionArea.qml</file>
         <file>Canvas.js</file>
         <file>SettingsPage.qml</file>
+        <file>ChannelModel.ini</file>
     </qresource>
 </RCC>

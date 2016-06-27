@@ -9,6 +9,10 @@ Window {
     Component.onCompleted: {
         height = Settings.getValue("UI", "height");
         width = Settings.getValue("UI", "width");
+        maximumHeight = height;
+        maximumWidth = width;
+        minimumHeight = height;
+        minimumWidth = width;
 
         var simTime = parseInt(Settings.getValue("Simulation", "time"));
 

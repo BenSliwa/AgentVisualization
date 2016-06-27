@@ -9,8 +9,8 @@ class Friis : public ChannelModel
 public:
     Friis(QObject *_parent = 0);
 
-    double calculateReceivedSignalStrength(double _distance_m);
-    double calculateDistance(double _pRMin_dBm);
+    double calculateReceivedSignalStrength(const Position &_sender, const Position &_receiver);
+    double calculateDistance(double _PrMin_dBm);
 };
 
 #endif // FRIIS_H
