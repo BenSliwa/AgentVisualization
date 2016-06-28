@@ -9,7 +9,8 @@ AppController::AppController(QObject *_parent) : QObject(_parent),
     m_sender(0),
     m_destination(0),
     m_simTime_ms(0),
-    m_dMax_m(0)
+    m_dMax_m(0),
+    m_showCoverage(false)
 {
     m_settings.init(":/Settings.ini");
 
@@ -87,6 +88,9 @@ void AppController::setSimTime(double _simTime_ms)
                 Position p2 = *to->getPosition();
 
                 double distance_m = sqrt(pow(p2.x-p1.x,2) + pow(p2.y-p1.y,2) + pow(p2.z-p1.z,2));
+                double distance_2d_m = sqrt(pow(p2.x-p1.x,2) + pow(p2.y-p1.y,2));
+                distance_m = distance_2d_m;
+
                 if(distance_m<m_dMax_m)
                 {
                     neighbors << to;
@@ -151,18 +155,15 @@ void AppController::setChannelModelParameter(const QString &_key, double _value)
         channelModel->setTransmissionGain(_value);
     else if(_key=="Gr")
         channelModel->setReceiverGain(_value);
-
+    else if(_key=="coverage")
+        _value==1 ? m_showCoverage=true : m_showCoverage=false;
 
     m_dMax_m = channelModelService->getChannelModel()->calculateDistance(-83);
 
-    if(_key=="coverage")
-    {
-        qDebug() << _value;
-        if(_value==0)
-            emit coverageRangeChanged(-1);
-        else
-            emit coverageRangeChanged(m_dMax_m);
-    }
+    if(m_showCoverage==0)
+        emit coverageRangeChanged(-1);
+    else
+        emit coverageRangeChanged(m_dMax_m);
 
     setSimTime(m_simTime_ms);
 }

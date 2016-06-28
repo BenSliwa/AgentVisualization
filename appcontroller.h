@@ -52,7 +52,7 @@ private:
 
     double m_simTime_ms;
     double m_dMax_m;
-
+    bool m_showCoverage;
 };
 
 #endif // APPCONTROLLER_H

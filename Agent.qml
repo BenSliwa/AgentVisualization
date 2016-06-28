@@ -1,11 +1,9 @@
 import QtQuick 2.0
 
-
-
 Rectangle {
     property string m_id: ""
+    signal positionUpdateResponse(double _x, double _y, double _z)
 
-    //x: parent.width/+2-width/2; y: parent.height/2-height/2
     width: 30; height: width
     color: "blue"
 
@@ -35,8 +33,8 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        //AppController.agentPositionUpdated.connect(onAgentPositionUpdated);
         parent.agentPositionUpdated.connect(onAgentPositionUpdated);
+        parent.requestPositionUpdates.connect(onPositionUpdateRequest);
     }
 
     function toggleVisibility()
@@ -59,12 +57,14 @@ Rectangle {
             setPosition(_x, _y);
     }
 
+    function onPositionUpdateRequest()
+    {
+        parent.onPositionUpdateResponse(x+width/2, y+height/2, 0);
+    }
+
     function setPosition(_x, _y)
     {
         x = _x - width/2;
         y = _y - height/2;
-
-        // TODO: hier fehlt das mapping
-
     }
 }

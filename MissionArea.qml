@@ -17,6 +17,7 @@ Rectangle {
     property variant connections: []
 
     signal agentPositionUpdated(string _id, double _x, double _y, double _z)
+    signal requestPositionUpdates();
 
     id: rect
 
@@ -50,14 +51,6 @@ Rectangle {
 
     }
 
-    function test(_value)
-    {
-        a = _value;
-
-        canvas.requestPaint();
-    }
-
-
     function draw()
     {
         var ctx = canvas.getContext("2d");
@@ -70,9 +63,7 @@ Rectangle {
 
             CanvasLib.drawLine(ctx, pos1.x, pos1.y, pos2.x, pos2.y, "black", 2);
 
-            if(coverageRange>-1)
-                CanvasLib.drawArc(ctx, pos1.x, pos1.y, 200, 0, 360, false, "#408F80", false, 1);
-        }
+       }
 
         for(var i=0; i<connections.length; i++)
         {
@@ -82,17 +73,15 @@ Rectangle {
 
 
             CanvasLib.drawLine(ctx, from.x, from.y, to.x, to.y, "lightgreen", 2);
-
-
-
         }
+
+        requestPositionUpdates();
     }
 
     function onAgentAdded(_id, _x, _y, _z)
     {
         var agent = UI.createObject("Agent.qml", rect);
         var pos = mapToMissionArea(_x, _y, _z);
-
 
         agent.setId(_id);
         agent.setPosition(pos.x, pos.y);
@@ -147,7 +136,17 @@ Rectangle {
 
     function onCoverageRangeChanged(_range)
     {
-        coverageRange = _range;
+        // range * width / (inMax-inMin)
+        coverageRange = _range * 800/500;
+
+    }
+
+    function onPositionUpdateResponse(_x, _y, _z)
+    {
+        var ctx = canvas.getContext("2d");
+        if(coverageRange>-1)
+            CanvasLib.drawArc(ctx, _x, _y, coverageRange, 0, 360, false, "#408F80", false, 1);
+
     }
 
 }

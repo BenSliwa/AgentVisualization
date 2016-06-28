@@ -13,6 +13,7 @@ Rectangle{
     function setSliderValue(_value)
     {
         slider.value = _value;
+        setLabelText(slider.value);
     }
 
     function setValueRange(_min, _max)

@@ -2,7 +2,6 @@
 
 IniSettings::IniSettings(QObject *_parent) : QObject(_parent)
 {
-    qDebug() << "IniSettings::IniSettings";
 }
 
 void IniSettings::init(const QString &_path)

@@ -13,11 +13,6 @@ Window {
         maximumWidth = width;
         minimumHeight = height;
         minimumWidth = width;
-
-        var simTime = parseInt(Settings.getValue("Simulation", "time"));
-
-        slider.minimumValue = 0;
-        slider.maximumValue = simTime;
     }
 
     function createAgent(_id, _x, _y, _z, _alpha)
@@ -53,24 +48,22 @@ Window {
         anchors.bottom: parent.bottom
     }
 
-    Text {
-        id: simTimeLabel
-        text: "Time[s]: "
-        color: "white"
-        width: parent.width/8
-    }
+    LabelledSlider{
+        width: parent.width
+        id: timeSlider
+        height: 25
+        Component.onCompleted: {
+            var simTime = parseInt(Settings.getValue("Simulation", "time"));
+            if(simTime<=0)
+                timeSlider.visible = false;
 
-    Slider {
-        width: parent.width/8*6
-        id: slider
-        anchors.left: simTimeLabel.right
-
-        onValueChanged: {
-            var currentValue = parseInt(value);
-            simTimeLabel.text = "Time[s]: " + currentValue;
+            timeSlider.setLabelKey("Time[s]: $value");
+            timeSlider.setValueRange(0, simTime);
+            timeSlider.setSliderValue(0);
+        }
+        onSliderValueChanged: {
+            var currentValue = parseInt(_value);
             AppController.setSimTime(currentValue*1000);
-
-            missionArea.test(currentValue);
         }
     }
 }
