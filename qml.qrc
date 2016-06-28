@@ -8,5 +8,8 @@
         <file>Canvas.js</file>
         <file>SettingsPage.qml</file>
         <file>ChannelModel.ini</file>
+        <file>LabelledSlider.qml</file>
+        <file>LabelledTextField.qml</file>
+        <file>LabelledCheckBox.qml</file>
     </qresource>
 </RCC>

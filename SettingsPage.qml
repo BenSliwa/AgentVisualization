@@ -3,7 +3,7 @@ import QtQuick.Controls 1.4
 
 Rectangle {
     visible: false
-    color: "#6e6e6e"
+    color: "#3B303D"
     //anchors.fill: parent
 
     Rectangle{
@@ -16,28 +16,72 @@ Rectangle {
     width: parent.width
     height: 100
 
-    Component.onCompleted: {
-        alpha.value = Settings.getValue("ChannelModel", "gamma");
-    }
+    Column{
+        width: parent.width
 
-    Text {
-        id: name
-        text: "Gamma: "
-        color: "white"
-        width: parent.width/5
-    }
-    Slider{
-        id: alpha
-        minimumValue: 1
-        maximumValue: 7
-        width: parent.width/5*4
-        anchors.left: name.right
-
-        onValueChanged: {
-            AppController.handleGammaChange(value);
-            name.text = "Gamma: " + value
+        LabelledSlider{
+            width: parent.width/2
+            id: gammaSlider
+            height: 25
+            Component.onCompleted: {
+                var value = Settings.getValue("ChannelModel", "gamma");
+                gammaSlider.setLabelKey("Gamma: $value");
+                gammaSlider.setValueRange(1, 7);
+                gammaSlider.setSliderValue(value);
+            }
+            onSliderValueChanged: {
+                AppController.setChannelModelParameter("gamma", _value)
+            }
         }
+
+
+        LabelledTextField{
+            width: parent.width/2
+            id: psField
+            height: 25
+            Component.onCompleted: {
+                var value = Settings.getValue("ChannelModel", "Ps")
+                //psField.setLayoutRatio(1, 2);
+                psField.setValue(value);
+                psField.setLabel("Transmission Power [mW]")
+            }
+            onTextFieldChanged: {
+                AppController.setChannelModelParameter("Ps", parseFloat(_value))
+            }
+        }
+
+        LabelledTextField{
+            width: parent.width/2
+            id: fField
+            height: 25
+            Component.onCompleted: {
+                var value = Settings.getValue("ChannelModel", "f")
+               // psField.setLayoutRatio(1, 2);
+                fField.setValue(value);
+                fField.setLabel("Frequency [GHz]")
+            }
+            onTextFieldChanged: {
+                AppController.setChannelModelParameter("f", parseFloat(_value))
+            }
+        }
+
+        LabelledCheckBox{
+            width: parent.width/2
+            id: coverageField
+            height: 25
+            Component.onCompleted: {
+                coverageField.setLabel("Show Coverage")
+            }
+            onCheckBoxCheckedChanged: {
+                AppController.setChannelModelParameter("coverage", _value)
+            }
+        }
+
     }
+
+
+
+
 
 
 }

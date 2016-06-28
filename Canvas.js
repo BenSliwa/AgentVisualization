@@ -17,20 +17,32 @@ function rotate(_ctx, _x, _y, _angle)
     _ctx.translate(-_x,-_y);
 }
 
-function drawLine(_ctx, _x0, _y0, _x1, _y1, _color)
+function drawLine(_ctx, _x0, _y0, _x1, _y1, _color, _width)
 {
     _ctx.strokeStyle = _color;
     _ctx.beginPath();
     _ctx.moveTo(_x0, _y0);
     _ctx.lineTo(_x1, _y1);
+    _ctx.lineWidth = _width;
     _ctx.stroke();
 }
 
-function drawArc(_ctx, _x, _y, _r, _start, _end, _clockWise, _color)
+function drawArc(_ctx, _x, _y, _r, _start, _end, _clockWise, _color, _fill, _lineWidth)
 {
-    _ctx.fillStyle = _color;
+
     _ctx.beginPath()
     _ctx.arc(_x, _y, _r, _start, _end, _clockWise);
     _ctx.closePath();
-    _ctx.fill();
+
+    if(_fill==true)
+    {
+        _ctx.fillStyle = _color;
+        _ctx.fill();
+    }
+    else
+    {
+        _ctx.strokeStyle = _color;
+        _ctx.stroke();
+    }
 }
+

@@ -7,7 +7,7 @@ Rectangle {
     property double inX: 0
     property double inY: 0
     property double inZ: 0
-
+    property double coverageRange: -1
     property int h: 0
     property int w: 0
 
@@ -43,6 +43,7 @@ Rectangle {
         AppController.clearLinks.connect(onClearLinks);
         AppController.addLink.connect(onAddLink);
         AppController.updateLinks.connect(onUpdateLinks);
+        AppController.coverageRangeChanged.connect(onCoverageRangeChanged);
 
 
         AppController.agentPositionUpdated.connect(onAgentPositionUpdated);
@@ -67,7 +68,10 @@ Rectangle {
             var pos1 = mapToMissionArea(link[0], link[1], 0);
             var pos2 = mapToMissionArea(link[3], link[4], 0);
 
-            CanvasLib.drawLine(ctx, pos1.x, pos1.y, pos2.x, pos2.y, "black");
+            CanvasLib.drawLine(ctx, pos1.x, pos1.y, pos2.x, pos2.y, "black", 2);
+
+            if(coverageRange>-1)
+                CanvasLib.drawArc(ctx, pos1.x, pos1.y, 200, 0, 360, false, "#408F80", false, 1);
         }
 
         for(var i=0; i<connections.length; i++)
@@ -76,7 +80,11 @@ Rectangle {
             var from = mapToMissionArea(connection[0], connection[1], 0);
             var to = mapToMissionArea(connection[3], connection[4], 0);
 
-            CanvasLib.drawLine(ctx, from.x, from.y, to.x, to.y, "lightgreen");
+
+            CanvasLib.drawLine(ctx, from.x, from.y, to.x, to.y, "lightgreen", 2);
+
+
+
         }
     }
 
@@ -84,6 +92,7 @@ Rectangle {
     {
         var agent = UI.createObject("Agent.qml", rect);
         var pos = mapToMissionArea(_x, _y, _z);
+
 
         agent.setId(_id);
         agent.setPosition(pos.x, pos.y);
@@ -93,6 +102,8 @@ Rectangle {
     {
         var x = map(_x, 250, inX, 0.0, w);
         var y = map(_y, 250, inY, h, 0.0);
+
+
 
         agentPositionUpdated(_id, x, y, 0);
     }
@@ -132,6 +143,11 @@ Rectangle {
     function onUpdateLinks()
     {
         canvas.requestPaint();
+    }
+
+    function onCoverageRangeChanged(_range)
+    {
+        coverageRange = _range;
     }
 
 }

@@ -5,8 +5,6 @@ Udp::Udp(const QMap<QString, QVariant> &_settings, QObject *_parent) : QObject(_
     connect(&m_socket, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
 
     int port = _settings.value("port").toInt();
-
-
 }
 
 void Udp::sendData(const QByteArray &_data, const QString &_remoteAddress, int _remotePort)

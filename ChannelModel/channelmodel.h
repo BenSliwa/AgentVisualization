@@ -15,7 +15,12 @@ public:
     virtual double calculateReceivedSignalStrength(const Position &_sender, const Position &_receiver) = 0;
     virtual double calculateDistance(double _PrMin_dBm) = 0;
 
+    void setFrequency(double _f_GHz);
+    void setTransmissionPower(double _Ps_mW);
     void setGamma(double _gamma);
+    void setTransmissionGain(double _gain);
+    void setReceiverGain(double _gain);
+
 
 
 protected:

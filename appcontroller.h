@@ -22,12 +22,14 @@ public:
     Q_INVOKABLE void handleAgentLeftClick(const QString &_id);
     Q_INVOKABLE void handleAgentRightClick(const QString &_id);
 
-    Q_INVOKABLE void handleGammaChange(double _gamma);
+    Q_INVOKABLE void setChannelModelParameter(const QString &_key, double _value);
 
 private slots:
     void onAgentPositionUpdated();
 
 signals:
+    void coverageRangeChanged(double _range_m);
+
     void agentAdded(const QString &_id, double _x, double _y, double _z);
     void agentPositionUpdated(const QString &_id, double _x, double _y, double _z);
 

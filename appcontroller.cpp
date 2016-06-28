@@ -136,13 +136,33 @@ void AppController::handleAgentRightClick(const QString &_id)
     setSimTime(m_simTime_ms);
 }
 
-void AppController::handleGammaChange(double _gamma)
+void AppController::setChannelModelParameter(const QString &_key, double _value)
 {
     ChannelModelService *channelModelService = ChannelModelService::getInstance();
     ChannelModel *channelModel = channelModelService->getChannelModel();
 
-    channelModel->setGamma(_gamma);
+    if(_key=="f")
+        channelModel->setFrequency(_value * pow(10, 9));
+    else if(_key=="Ps")
+        channelModel->setTransmissionPower(_value);
+    else if(_key=="gamma")
+        channelModel->setGamma(_value);
+    else if(_key=="Gs")
+        channelModel->setTransmissionGain(_value);
+    else if(_key=="Gr")
+        channelModel->setReceiverGain(_value);
+
+
     m_dMax_m = channelModelService->getChannelModel()->calculateDistance(-83);
+
+    if(_key=="coverage")
+    {
+        qDebug() << _value;
+        if(_value==0)
+            emit coverageRangeChanged(-1);
+        else
+            emit coverageRangeChanged(m_dMax_m);
+    }
 
     setSimTime(m_simTime_ms);
 }
