@@ -11,5 +11,30 @@
         <file>LabelledSlider.qml</file>
         <file>LabelledTextField.qml</file>
         <file>LabelledCheckBox.qml</file>
+        <file>SampleData/Agent1.txt</file>
+        <file>SampleData/Agent2.txt</file>
+        <file>SampleData/Agent3.txt</file>
+        <file>SampleData/Agent4.txt</file>
+        <file>SampleData/Agent5.txt</file>
+        <file>SampleData/Agent6.txt</file>
+        <file>SampleData/Agent7.txt</file>
+        <file>SampleData/Agent8.txt</file>
+        <file>SampleData/Agent9.txt</file>
+        <file>SampleData/Agent10.txt</file>
+        <file>SampleData/Agent11.txt</file>
+        <file>SampleData/Agent12.txt</file>
+        <file>SampleData/Agent13.txt</file>
+        <file>SampleData/Agent14.txt</file>
+        <file>SampleData/Agent15.txt</file>
+        <file>SampleData/Agent16.txt</file>
+        <file>SampleData/Agent17.txt</file>
+        <file>SampleData/Agent18.txt</file>
+        <file>SampleData/Agent19.txt</file>
+        <file>SampleData/Agent20.txt</file>
+        <file>SampleData/Agent21.txt</file>
+        <file>SampleData/Agent22.txt</file>
+        <file>SampleData/Agent23.txt</file>
+        <file>SampleData/Agent24.txt</file>
+        <file>SampleData/Agent25.txt</file>
     </qresource>
 </RCC>

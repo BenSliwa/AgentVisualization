@@ -1,0 +1,1 @@
+press h to toggle channel settings
