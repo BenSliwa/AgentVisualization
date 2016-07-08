@@ -36,5 +36,7 @@
         <file>SampleData/Agent23.txt</file>
         <file>SampleData/Agent24.txt</file>
         <file>SampleData/Agent25.txt</file>
+        <file>Images/bs_64.png</file>
+        <file>Images/uav_64.png</file>
     </qresource>
 </RCC>

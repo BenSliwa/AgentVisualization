@@ -22,7 +22,5 @@ void Udp::onReadyRead()
         quint16 senderPort;
 
         m_socket.readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
-
-
     }
 }

@@ -11,6 +11,10 @@ Rectangle {
     property int h: 0
     property int w: 0
 
+    property string activeLink_color: ""
+    property string inactiveLink_color: ""
+
+
     property int a: 0
 
     property variant links: []
@@ -21,7 +25,8 @@ Rectangle {
 
     id: rect
 
-    color: "#1c1c1c"
+  // color: "#1c1c1c"
+    color: "#197050"
     anchors.fill: parent
 
     Canvas{
@@ -35,6 +40,11 @@ Rectangle {
     Component.onCompleted: {
         h = parseInt(Settings.getValue("UI", "height"));
         w = parseInt(Settings.getValue("UI", "width"));
+        activeLink_color = Settings.getValue("UI", "activeLink_color");
+        inactiveLink_color = Settings.getValue("UI", "inactiveLink_color");
+        rect.color = Settings.getValue("UI", "background_color");
+
+        console.log(activeLink_color, inactiveLink_color)
 
         inX = Settings.getValue("Playground", "x");
         inY = Settings.getValue("Playground", "y");
@@ -61,7 +71,7 @@ Rectangle {
             var pos1 = mapToMissionArea(link[0], link[1], 0);
             var pos2 = mapToMissionArea(link[3], link[4], 0);
 
-            CanvasLib.drawLine(ctx, pos1.x, pos1.y, pos2.x, pos2.y, "black", 2);
+            CanvasLib.drawLine(ctx, pos1.x, pos1.y, pos2.x, pos2.y, inactiveLink_color, 2);
 
        }
 
@@ -72,7 +82,7 @@ Rectangle {
             var to = mapToMissionArea(connection[3], connection[4], 0);
 
 
-            CanvasLib.drawLine(ctx, from.x, from.y, to.x, to.y, "lightgreen", 2);
+            CanvasLib.drawLine(ctx, from.x, from.y, to.x, to.y, activeLink_color, 3);
         }
 
         requestPositionUpdates();
