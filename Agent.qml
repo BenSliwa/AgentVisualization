@@ -4,20 +4,20 @@ Rectangle {
     property string m_id: ""
     signal positionUpdateResponse(double _x, double _y, double _z)
 
-    width: 128; height: width
+    width: 32
+    //width: 128;
+    height: width
 
-    //color: "blue"
-    color: "transparent"
+    color: "blue"
+    //color: "transparent"
 
     radius: width*0.5
-    Image {
+    /*Image {
         anchors.fill: parent
         id: icon
         source: "Images/uav_64.png"
         fillMode: Image.PreserveAspectFit
-
-
-    }
+    }*/
 
     MouseArea{
         anchors.fill: parent
@@ -36,8 +36,10 @@ Rectangle {
     }
 
     Text {
-        anchors.verticalCenter: icon.verticalCenter
-        anchors.horizontalCenter: icon.horizontalCenter
+        //anchors.verticalCenter: icon.verticalCenter
+        //anchors.horizontalCenter: icon.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
 
         id: text
         font.pointSize: 15
@@ -76,7 +78,10 @@ Rectangle {
 
     function setPosition(_x, _y)
     {
-        x = _x - icon.width/2;
-        y = _y - icon.height/2;
+       // x = _x - icon.width/2;
+       // y = _y - icon.height/2;
+
+        x = _x - width/2;
+        y = _y - height/2;
     }
 }
